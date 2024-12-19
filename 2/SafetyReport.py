@@ -1,27 +1,26 @@
-debug = True
+debug = False
 
 filename = "input.txt"
 file = open(filename, "r")
 
-safe = 0
+safe_reports = 0
 while True:
 	line = file.readline()
-	if line == ""
+	if line == "":
 		break
 
 	levels =  line.split()
-	if debug:
-		print(levels)
+	print(levels)
 
-	safe += 1 # assume levels are safe, checking below
+	safe = True
 	size = len(levels)
 	direction = 0
 	for i in range(1, size):
-		diff = levels[i] - levels[i-1]
+		diff = int(levels[i]) - int(levels[i-1])
 
 		# checking difference
 		if diff == 0 or abs(diff) > 3:
-			safe -= 1
+			safe = False
 			break
 
 		# changing direction
@@ -30,5 +29,16 @@ while True:
 		else:
 			curr_dire = diff / abs(diff)
 			if direction != curr_dire: # if direction changes, levels are unsafe
-				safe -= 1
+				safe = False
 				break
+
+	if safe:
+		safe_reports += 1
+		print("Result: Safe")
+	else:
+		print("Result: Unsafe")
+
+	if debug:
+		input()
+
+print("Safe Reports:", safe_reports)
